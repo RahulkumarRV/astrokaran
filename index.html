@@ -68,6 +68,93 @@
         display: block;
         animation: fadeInTooltip 0.2s ease-out forwards;
       }
+
+      /* --- Planetary Orbit Animation --- */
+      @keyframes rotate-orbit {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .orbit-system {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: -1;
+        /* This creates a cool 3D perspective */
+        perspective: 1000px;
+        transform-style: preserve-3d;
+      }
+
+      .sun {
+        width: 40px;
+        height: 40px;
+        background: radial-gradient(ellipse at center, #f8c363 0%, #e38b29 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 40px -10px #f8c363;
+        position: absolute;
+      }
+
+      .orbit {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15); /* Faint orbit path */
+        animation-name: rotate-orbit;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        /* This tilts the orbits for a realistic 3D look */
+        transform: rotateX(75deg);
+      }
+
+      .orbit-1 {
+        width: 200px;
+        height: 200px;
+        animation-duration: 15s;
+      }
+      .orbit-2 {
+        width: 350px;
+        height: 350px;
+        animation-duration: 25s;
+      }
+      .orbit-3 {
+        width: 550px;
+        height: 550px;
+        animation-duration: 40s;
+      }
+
+      .planet {
+        position: absolute;
+        border-radius: 50%;
+        /* Positions the planet on its orbit path */
+        top: 50%;
+        left: -10px; /* This should be negative half of the planet's width */
+        transform: translateY(-50%);
+      }
+
+      .planet-mercury {
+        width: 15px;
+        height: 15px;
+        background: radial-gradient(circle at 30% 30%, #d3d3d3, #5a5a5a);
+        left: -7.5px;
+      }
+
+      .planet-earth {
+        width: 25px;
+        height: 25px;
+        background: radial-gradient(circle at 30% 30%, #6cb9e9, #1c4b82);
+        left: -12.5px;
+      }
+
+      .planet-jupiter {
+        width: 35px;
+        height: 35px;
+        background: radial-gradient(circle at 30% 30%, #e0c5a1, #8f6d3b);
+        left: -17.5px;
+      }
     </style>
     <script type="module">
       window.onerror = (message, source, lineno, colno, errorObj) => {
@@ -1308,15 +1395,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         border-color: hsl(var(--border));
       }
       body {
-        background: linear-gradient(
-          135deg,
-          #0f0f23 0%,
-          #1a1a2e 25%,
-          #16213e 50%,
-          #0f3460 75%,
-          #533483 100%
-        );
-        color: hsl(var(--foreground));
+        background: linear-gradient(135deg, #F5F7FA 0%, #E9EBF0 100%); /* New light background */
+        color: #2c3e50; /* New dark slate blue text color */
         font-family: "Inter", sans-serif;
         overflow-x: hidden;
       }
@@ -1426,7 +1506,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         position: absolute;
         width: 2px;
         height: 2px;
-        background: white;
+        background: #a8b2c2; /* A visible but subtle blue-grey */
         border-radius: 50%;
         animation: twinkle 3s infinite;
       }
@@ -1440,14 +1520,14 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         }
       }
       .glass-card {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.7);
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.05);
         border-radius: 20px;
       }
       .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8A2BE2 0%, #4682B4 100%); /* Blue-Violet to Steel-Blue */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -1456,29 +1536,21 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
       }
       .pricing-card {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0.05) 100%
-        );
-        -webkit-backdrop-filter: blur(15px);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
         transition: all 0.3s ease;
+        border-radius: 1.5rem; /* 24px */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       }
       .pricing-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
       }
       .testimonial-card {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.08) 0%,
-          rgba(255, 255, 255, 0.03) 100%
-        );
-        -webkit-backdrop-filter: blur(12px);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 1rem; /* 16px */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       }
       .hover\:bg-accent:hover {
         background-color: hsl(var(--accent));
@@ -2174,7 +2246,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         <div class="planet planet-5"></div>
         <div class="planet planet-6"></div>
         <header
-          class="fixed top-0 w-full z-50 glass-card border-b border-white/20"
+          class="fixed top-0 w-full z-50 glass-card border-b border-slate-200"
           style="opacity: 1; transform: none"
         >
           <nav
@@ -2209,27 +2281,27 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             <div class="hidden md:flex space-x-8">
               <a
                 href="https://e0eaef00-c01a-4a8b-bcc5-a9a53f71feee.dev34.app-preview.com/#home"
-                class="text-white/80 hover:text-white transition-colors"
+                class="text-slate-600 hover:text-white transition-colors"
                 data-edit-id="src/components/sections/Header.jsx:20:11"
                 >Home</a
               ><a
                 href="https://e0eaef00-c01a-4a8b-bcc5-a9a53f71feee.dev34.app-preview.com/#about"
-                class="text-white/80 hover:text-white transition-colors"
+                class="text-slate-600 hover:text-white transition-colors"
                 data-edit-id="src/components/sections/Header.jsx:21:11"
                 >About</a
               ><a
                 href="https://e0eaef00-c01a-4a8b-bcc5-a9a53f71feee.dev34.app-preview.com/#services"
-                class="text-white/80 hover:text-white transition-colors"
+                class="text-slate-600 hover:text-white transition-colors"
                 data-edit-id="src/components/sections/Header.jsx:22:11"
                 >Services</a
               ><a
                 href="https://e0eaef00-c01a-4a8b-bcc5-a9a53f71feee.dev34.app-preview.com/#testimonials"
-                class="text-white/80 hover:text-white transition-colors"
+                class="text-slate-600 hover:text-white transition-colors"
                 data-edit-id="src/components/sections/Header.jsx:23:11"
                 >Testimonials</a
               ><a
                 href="https://e0eaef00-c01a-4a8b-bcc5-a9a53f71feee.dev34.app-preview.com/#contact"
-                class="text-white/80 hover:text-white transition-colors"
+                class="text-slate-600 hover:text-white transition-colors"
                 data-edit-id="src/components/sections/Header.jsx:24:11"
                 >Contact</a
               >
@@ -2244,21 +2316,33 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
           </nav>
         </header>
         <main>
-          <section id="home" class="pt-32 pb-20 px-6">
-            <div class="container mx-auto text-center">
+          <section id="home" class="relative overflow-hidden pt-32 pb-20 px-6">
+
+           <div class="orbit-system">
+            <div class="sun"></div>
+            <div class="orbit orbit-1">
+              <div class="planet planet-mercury"></div>
+            </div>
+            <div class="orbit orbit-2">
+              <div class="planet planet-earth"></div>
+            </div>
+            <div class="orbit orbit-3">
+              <div class="planet planet-jupiter"></div>
+            </div>
+          </div>
+            <div class="container mx-auto text-center relative z-10">
               <div style="opacity: 1; transform: none">
                 <h1
                   class="text-5xl md:text-7xl font-cinzel font-bold mb-6 gradient-text"
                   data-edit-id="src/components/sections/Hero.jsx:15:11"
                 >
-                  Unlock the Future Secrets with Astrology
+                  Unlock the Future Secrets with Astrology & Numerology
                 </h1>
                 <p
-                  class="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto"
+                  class="text-xl md:text-2xl text-slate-600 mb-8 max-w-3xl mx-auto"
                   data-edit-id="src/components/sections/Hero.jsx:16:11"
                 >
-                  Journey through the stars with personalized astrology readings
-                  that illuminate your path to purpose, love, and prosperity.
+                  Start your journey with astrology, numerology, and nakshatra guidance – find success, love, and peace in life.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
@@ -2282,7 +2366,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                       ></path></svg
                     >Book Your Call</button
                   ><button
-                    class="inline-flex items-center justify-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-background hover:text-accent-foreground h-11 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg"
+                    class="inline-flex items-center justify-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-background hover:text-accent-foreground h-11 border-slate-200 text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg"
                     data-edit-id="src/components/sections/Hero.jsx:24:13"
                     onclick="window.open('https://wa.me/7087665550', '_blank')"
                   >
@@ -2302,7 +2386,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   <img
                     alt="Professional astrologer in meditation pose with cosmic background"
                     class="w-full h-96 object-cover rounded-2xl mb-6"
-                    src="./astrokaran_files/photo-1582744709859-2d89c6920cfb"
+                    src="https://res.cloudinary.com/dvqetzfqe/image/upload/v1751902505/about_img_uwovvo.jpg"
                     style="filter: invert(0)"
                   />
                 </div>
@@ -2311,24 +2395,19 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                     class="text-4xl md:text-5xl font-cinzel font-bold mb-6 gradient-text"
                     data-edit-id="src/components/sections/About.jsx:19:13"
                   >
-                    Meet Your Astro Karan
+                    Meet Astrologer Karan
                   </h2>
                   <p
-                    class="text-lg text-white/80 mb-6"
+                    class="text-lg text-slate-600 mb-6"
                     data-edit-id="src/components/sections/About.jsx:20:13"
                   >
-                    Karan professionally trained astrologer with a passion for
-                    helping others find clarity and direction through the wisdom
-                    of astrology
+                    I’m Karan, an experienced astrologer dedicated to guiding people through life’s challenges using the timeless wisdom of astrology and nakshatras. Over the years, I’ve helped countless individuals find clarity and direction in key areas of life such as childbirth, marriage delays, career growth, foreign settlement, financial stability, education, and health-related concerns.
                   </p>
                   <p
-                    class="text-lg text-white/80 mb-8"
+                    class="text-lg text-slate-600 mb-8"
                     data-edit-id="src/components/sections/About.jsx:21:13"
                   >
-                    I have provided readings to many people, and I’m grateful
-                    that most found my insights accurate and helpful. I combine
-                    traditional techniques with a modern perspective to offer
-                    honest, personalized guidance for your journey.
+                    My approach blends traditional astrology with a practical, modern outlook to offer insights that are not only accurate but also easy to understand and apply. Whether you’re struggling with personal confusion or seeking answers about your future, I provide honest, heart-centered guidance that’s rooted in ancient knowledge and delivered in simple, relatable language. From horoscope analysis and kundli matching to karma and nakshatra-based predictions, my aim is to help you make confident, positive decisions for a better tomorrow.
                   </p>
                 </div>
               </div>
@@ -2347,7 +2426,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   Consultation Packages
                 </h2>
                 <p
-                  class="text-xl text-white/80 max-w-3xl mx-auto"
+                  class="text-xl text-slate-600 max-w-3xl mx-auto"
                   data-edit-id="src/components/sections/Services.jsx:68:11"
                 >
                   Choose your perfect astrology reading package designed to
@@ -2388,8 +2467,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   <div class="text-4xl font-bold mb-2 gradient-text">
                     ₹500
                   </div>
-                  <div class="text-white/70 mb-6">50 Minutes Call</div>
-                  <ul class="space-y-3 mb-8 text-white/80">
+                  <div class="text-slate-500 mb-6">50 Minutes Call</div>
+                  <ul class="space-y-3 mb-8 text-slate-600">
                     <li class="flex items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2472,8 +2551,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   <div class="text-4xl font-bold mb-2 gradient-text">
                     ₹1,100
                   </div>
-                  <div class="text-white/70 mb-6">100 Minutes Call</div>
-                  <ul class="space-y-3 mb-8 text-white/80">
+                  <div class="text-slate-500 mb-6">100 Minutes Call</div>
+                  <ul class="space-y-3 mb-8 text-slate-600">
                     <li class="flex items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2489,7 +2568,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                       >
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12 6 12 12 16 14"></polyline></svg
-                      >Kundli analysis
+                      >Kundli analysis + Nemurology
                     </li>
                     <li class="flex items-center">
                       <svg
@@ -2598,8 +2677,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   <div class="text-4xl font-bold mb-2 gradient-text">
                     ₹3,100
                   </div>
-                  <div class="text-white/70 mb-6">180 Minutes Call</div>
-                  <ul class="space-y-3 mb-8 text-white/80">
+                  <div class="text-slate-500 mb-6">180 Minutes Call</div>
+                  <ul class="space-y-3 mb-8 text-slate-600">
                     <li class="flex items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -2742,7 +2821,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   Testimonials
                 </h2>
                 <p
-                  class="text-xl text-white/80 max-w-3xl mx-auto"
+                  class="text-xl text-slate-600 max-w-3xl mx-auto"
                   data-edit-id="src/components/sections/Testimonials.jsx:38:11"
                 >
                   Discover how astrology has transformed the lives of our
@@ -2848,7 +2927,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                       </div>
                     </div>
                   </div>
-                  <p class="text-white/80" data-edit-disabled="true">
+                  <p class="text-slate-600" data-edit-disabled="true">
                     The reading was incredibly accurate! The insights about my
                     career path helped me make the right decision. I'm now in my
                     dream job thanks to the cosmic guidance.
@@ -2952,7 +3031,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                       </div>
                     </div>
                   </div>
-                  <p class="text-white/80" data-edit-disabled="true">
+                  <p class="text-slate-600" data-edit-disabled="true">
                     Amazing experience! The relationship guidance was spot-on.
                     My marriage is stronger than ever after following the
                     suggested remedies. Highly recommended!
@@ -3056,7 +3135,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                       </div>
                     </div>
                   </div>
-                  <p class="text-white/80" data-edit-disabled="true">
+                  <p class="text-slate-600" data-edit-disabled="true">
                     The spiritual insights were life-changing. I found my true
                     purpose and inner peace. The advanced reading package was
                     worth every penny!
@@ -3075,7 +3154,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   Connect with the Astro Karan
                 </h2>
                 <p
-                  class="text-xl text-white/80 mb-12 max-w-3xl mx-auto"
+                  class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto"
                   data-edit-id="src/components/sections/Contact.jsx:17:11"
                 >
                   Ready to unlock your cosmic destiny? Book your personalized
@@ -3105,7 +3184,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                         ></path></svg
                       >WhatsApp Booking</button
                     ><button
-                      class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-background hover:text-accent-foreground h-11 px-8 border-white/30 text-white hover:bg-white/10 py-4 rounded-full"
+                      class="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border bg-background hover:text-accent-foreground h-11 px-8 border-slate-200 text-white hover:bg-white/10 py-4 rounded-full"
                       data-edit-disabled="true"
                       onclick="window.open('tel:7087665550')"
                     >
@@ -3204,7 +3283,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             </div>
           </section>
         </main>
-        <footer class="py-12 px-6 border-t border-white/20">
+        <footer class="py-12 px-6 border-t border-slate-200">
           <div class="container mx-auto text-center">
             <div class="flex items-center justify-center space-x-2 mb-4">
               <svg
@@ -3233,13 +3312,13 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
               >
             </div>
             <p
-              class="text-white/60 mb-4"
+              class="text-slate-500 mb-4"
               data-edit-id="src/components/sections/Footer.jsx:12:9"
             >
               Illuminating paths through ancient wisdom and cosmic insights
             </p>
             <p
-              class="text-white/40 text-sm"
+              class="text-slate-400 text-sm"
               data-edit-id="src/components/sections/Footer.jsx:15:9"
             ></p>
           </div>
